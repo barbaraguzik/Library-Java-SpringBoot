@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejestracja</title>
+    <link rel="stylesheet" href="/css/style1.css">
+</head>
+<body>
+    <header>
+        <h1>Biblioteka Miejska</h1>
+    </header>
+
+    <div class="container">
+        <h1>Rejestracja</h1>
+        <form action="/register" method="post">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" id="username" name="username" required/>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required/>
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" required/>
+            <button type="submit">Zarejestruj się</button>
+        </form>
+        <a href="/login">Masz już konto? Zaloguj się!</a>
+        <a href="/registerLibrarian">Zarejestruj się jako bibliotekarz</a>
+        <div class="error-message" th:if="${error}">
+            <p th:text="${error}"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-column">
+            <p><strong>Kontakt</strong></p>
+            <p>Adres: ul. Książkowa 1, 00-000 Miasto</p>
+            <p>Email: kontakt@bibliotekamiejska.pl</p>
+            <p>Telefon: 123 456 789</p>
+        </div>
+        <div class="divider"></div>
+        <div class="footer-column">
+            <p><strong>Media Społecznościowe</strong></p>
+            <p>Śledź nas na: <a href="https://facebook.com" target="_blank">Facebooku</a></p>
+            <p><a href="https://twitter.com" target="_blank">Twitterze</a></p>
+            <p><a href="https://instagram.com" target="_blank">Instagramie</a></p>
+        </div>
+    </footer>
+</body>
+</html>

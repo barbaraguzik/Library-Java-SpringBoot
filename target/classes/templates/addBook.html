@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj nową książkę</title>
+    <link rel="stylesheet" href="/css/style2.css">
+</head>
+<body>
+    <header>
+        <div class="welcome">
+            <span>Dodaj nową książkę</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <form action="#" th:action="@{/addBook}" th:object="${book}" method="post" class="book-form">
+            <label for="title">Tytuł:</label>
+            <input type="text" id="title" th:field="*{title}" required />
+            
+            <label for="author">Autor:</label>
+            <input type="text" id="author" th:field="*{author}" required />
+            
+            <label for="genre">Gatunek:</label>
+            <input type="text" id="genre" th:field="*{genre}" required />
+            
+            <button type="submit">Dodaj książkę</button>
+        </form>
+        <a th:href="@{/books}" class="back-link">Powrót do listy książek</a>
+    </div>
+</body>
+</html>

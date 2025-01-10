@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Moje Książki</title>
+    <link rel="stylesheet" href="/css/style2.css">
+    <script>
+        function cancelReservation(bookId) {
+            if (confirm("Czy na pewno chcesz anulować rezerwację tej książki?")) {
+                window.location.href = '/cancelReservation/' + bookId;
+            }
+        }
+
+        function prolongLoan(bookId) {
+            if (confirm("Czy na pewno chcesz przedłużyć wypożyczenie tej książki o 30 dni?")) {
+                window.location.href = '/prolongLoan/' + bookId;
+            }
+        }
+
+        function deleteAccount() {
+            if (confirm("Czy na pewno chcesz usunąć swoje konto?")) {
+                window.location.href = '/deleteAccount';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="welcome">
+            <span>Witaj, <span th:text="${username}"></span></span>
+        </div>
+        <div class="header-actions">
+            <form action="/books" method="get" th:if="${session.loggedUser != null && session.loggedUser.role == 'user'}">
+                <button type="submit">Lista książek</button>
+            </form>
+            <form action="/logout" method="get" th:if="${session.loggedUser != null}">
+                <button type="submit">Wyloguj</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <h2>Zarezerwowane książki</h2>
+        <div th:if="${#lists.isEmpty(reservedBooks)}">
+            <p>Nie masz zarezerwowanych żadnych książek</p>
+        </div>
+        <div th:unless="${#lists.isEmpty(reservedBooks)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Autor</th>
+                        <th>Rezerwacja do</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="book : ${reservedBooks}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.author}"></td>
+                        <td th:text="${book.reservationDue}"></td>
+                        <td>
+                            <button th:onclick="'cancelReservation(' + ${book.id} + ')'">Anuluj rezerwację</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Wypożyczone książki</h2>
+        <div th:if="${#lists.isEmpty(borrowedBooks)}">
+            <p>Nie masz wypożyczonych żadnych książek</p>
+        </div>
+        <div th:unless="${#lists.isEmpty(borrowedBooks)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Autor</th>
+                        <th>Wypożyczone do</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="book : ${borrowedBooks}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.author}"></td>
+                        <td th:style="${book.loanDue.isBefore(T(java.time.LocalDate).now())} ? 'color: red;' : ''" th:text="${book.loanDue}"></td>
+                        <td>
+                            <button th:if="${!book.prolonged}" th:onclick="'prolongLoan(' + ${book.id} + ')'">Przedłuż</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button onclick="deleteAccount()" class="delete-account">Usuń konto</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Książki</title>
+    <link rel="stylesheet" href="/css/style2.css">
+    <script>
+        function confirmReservation(bookId) {
+            if (confirm("Czy na pewno chcesz zarezerwować tę książkę?")) {
+                window.location.href = '/reserveBook/' + bookId;
+            }
+        }
+
+        function confirmAvailability(bookId) {
+            if (confirm("Czy na pewno chcesz ustawić tę książkę jako dostępną?")) {
+                window.location.href = '/updateAvailability/' + bookId;
+            }
+        }
+
+        function confirmLoan(bookId) {
+            if (confirm("Czy na pewno chcesz wypożyczyć tę książkę?")) {
+                window.location.href = '/loanBook/' + bookId;
+            }
+        }
+
+        function deleteBook(bookId) {
+            if (confirm("Czy na pewno chcesz usunąć tę książkę?")) {
+                window.location.href = '/deleteBook/' + bookId;
+            }
+        }
+
+        function showAllBooks() {
+            window.location.href = '/books';
+        }
+
+        function addNewBook() {
+            window.location.href = '/addBook';
+        }
+    </script>
+</head>
+<body>
+<header>
+    <div class="welcome">
+        <span th:if="${session.loggedUser != null}">Witaj, <span th:text="${session.loggedUser.username}"></span>!</span>
+    </div>
+    <div class="header-actions">
+        <form action="/userBooks" method="get" th:if="${session.loggedUser != null && session.loggedUser.role == 'user'}">
+            <button type="submit">Mój profil</button>
+        </form>
+        <form action="/logout" method="get" th:if="${session.loggedUser != null}">
+            <button type="submit">Wyloguj</button>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <h1>Lista Książek</h1>
+
+    <div class="search-section" th:if="${session.loggedUser != null && session.loggedUser.role == 'librarian'}">
+        <form action="/findBook" method="get">
+            <input type="text" name="bookId" placeholder="Wprowadź ID książki">
+            <button type="submit">Szukaj</button>
+        </form>
+        <br>
+        <button type="button" onclick="showAllBooks()">Wyświetl wszystkie</button>
+        <br>
+        <button type="button" onclick="addNewBook()">Dodaj nową książkę</button>
+    </div>
+
+    <div class="search-section" th:if="${session.loggedUser != null && session.loggedUser.role == 'user'}">
+        <form action="/search" method="get">
+            <select name="criteria">
+                <option value="title">Tytuł</option>
+                <option value="author">Autor</option>
+                <option value="genre">Gatunek</option>
+            </select>
+            <input type="text" name="query" placeholder="Wprowadź frazę">
+            <button type="submit">Szukaj</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Gatunek</th>
+            <th>Dostępność</th>
+            <th th:if="${session.loggedUser != null && session.loggedUser.role == 'librarian'}">Rezerwacja do</th>
+            <th th:if="${session.loggedUser != null && session.loggedUser.role == 'librarian'}">Wypożyczone do</th>
+            <th>Akcja</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:if="${session.loggedUser.role == 'librarian'}">
+                <span th:if="${book.borrowedBy != null}" th:text="'Wypożyczona przez ' + ${book.borrowedBy.username}"></span>
+                <span th:if="${book.borrowedBy == null && book.reservedBy != null}" th:text="'Zarezerwowana przez ' + ${book.reservedBy.username}"></span>
+                <span th:if="${book.borrowedBy == null && book.reservedBy == null}" th:text="'Dostępna'"></span>
+            </td>
+            <td th:if="${session.loggedUser.role != 'librarian'}" th:text="${book.available ? 'Dostępna' : 'Niedostępna'}"></td>
+            <td th:if="${session.loggedUser.role == 'librarian'}" th:text="${book.reservationDue != null ? book.reservationDue : '-'}"></td>
+            <td th:if="${session.loggedUser.role == 'librarian'}" th:text="${book.loanDue != null ? book.loanDue : '-'}"></td>
+            <td>
+                <button th:if="${book.borrowedBy == null && session.loggedUser != null && session.loggedUser.role == 'librarian'}" 
+                        th:onclick="'confirmLoan(' + ${book.id} + ')'"> 
+                    Wypożycz 
+                </button>
+                <button th:if="${book.available && session.loggedUser != null && session.loggedUser.role == 'user'}" 
+                        th:onclick="'confirmReservation(' + ${book.id} + ')'"> 
+                    Zarezerwuj 
+                </button>
+                <button th:if="${!book.available && session.loggedUser != null && session.loggedUser.role == 'librarian'}" 
+                        th:onclick="'confirmAvailability(' + ${book.id} + ')'"> 
+                    Książka oddana 
+                </button>
+                <button th:if="${session.loggedUser != null && session.loggedUser.role == 'librarian'}" 
+                        th:onclick="'deleteBook(' + ${book.id} + ')'"> 
+                    Usuń książkę 
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <div class="footer-column">
+        <p><strong>Kontakt</strong></p>
+        <p>Adres: ul. Książkowa 1, 00-000 Miasto</p>
+        <p>Email: kontakt@bibliotekamiejska.pl</p>
+        <p>Telefon: 123 456 789</p>
+    </div>
+    <div class="divider"></div>
+    <div class="footer-column">
+        <p><strong>Media Społecznościowe</strong></p>
+        <p>Śledź nas na:</p>
+        <p><a href="https://facebook.com" target="_blank">Facebooku</a></p>
+        <p><a href="https://twitter.com" target="_blank">Twitterze</a></p>
+        <p><a href="https://instagram.com" target="_blank">Instagramie</a></p>
+    </div>
+</footer>
+</body>
+</html>

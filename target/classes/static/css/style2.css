@@ -1,0 +1,251 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 30px;
+}
+
+header .welcome {
+    font-size: 3em;
+}
+
+header .header-actions form,
+header .header-actions a {
+    margin-left: 10px;
+}
+
+header .header-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+header .header-actions button:hover {
+    background-color: #0056b3;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-section form {
+    display: flex;
+    align-items: center;
+}
+
+.search-section input[type="text"],
+.search-section select {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px;
+}
+
+.search-section button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-top: 0px; 
+    height: 38px;
+}
+
+.search-section button:hover {
+    background-color: #0056b3;
+}
+
+.add-book-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.add-book-button:hover {
+    background-color: #218838;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td button {
+    padding: 5px 10px;
+    margin: 5px 0; /* Ustawienie marginesu na 5px w pionie */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+table td button:hover {
+    background-color: #ddd;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 14px;
+}
+
+.footer-column {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.footer-column p {
+    margin: 5px 0;
+}
+
+.footer-column a {
+    color: white;
+}
+
+.divider {
+    height: 80%;
+    width: 2px;
+    background-color: white;
+    margin: 0 10px;
+}
+
+.book-form,
+.loan-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px; /* Ustala maksymalną szerokość formularza */
+    margin: 0 auto; /* Wyśrodkowanie formularza w kontenerze */
+}
+
+.book-form label,
+.loan-form label {
+    margin-bottom: 5px; /* Odstęp poniżej etykiety */
+    font-weight: bold; /* Pogrubienie etykiety */
+    color: #333; /* Kolor tekstu etykiety */
+}
+
+.book-form input[type="text"],
+.loan-form input[type="text"] {
+    padding: 10px; /* Wewnętrzny odstęp w polach tekstowych */
+    margin-bottom: 15px; /* Odstęp poniżej pól tekstowych */
+    border: 1px solid #ccc; /* Kolor obramowania */
+    border-radius: 4px; /* Zaokrąglenie krawędzi */
+    font-size: 16px; /* Rozmiar czcionki */
+}
+
+.book-form button,
+.loan-form button {
+    padding: 10px; 
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    border-radius: 4px;
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background-color 0.3s;
+}
+
+.book-form button:hover,
+.loan-form button:hover {
+    background-color: #0056b3; 
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px; 
+    text-align: center; 
+    color: #007bff; 
+    text-decoration: none; 
+}
+
+.back-link:hover {
+    text-decoration: underline; 
+}
+
+.book-info {
+    margin-bottom: 20px; /* Odstęp poniżej informacji o książce */
+    text-align: center; /* Wyśrodkowanie tekstu wewnątrz sekcji informacji o książce */
+}
+
+.delete-account {
+    background-color: #dc3545; /* Czerwony kolor dla przycisku usuwania konta */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-account:hover {
+    background-color: #c82333; /* Ciemniejszy czerwony przy hoverze */
+}

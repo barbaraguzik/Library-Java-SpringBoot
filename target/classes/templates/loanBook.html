@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wypożycz książkę</title>
+    <link rel="stylesheet" href="/css/style2.css">
+</head>
+<body>
+    <header>
+        <div class="welcome">
+            <span>Wypożycz książkę</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Wypożyczana książka:</h1>
+        <div class="book-info">
+            <p><strong>Tytuł:</strong> <span th:text="${book.title}"></span></p>
+            <p><strong>Autor:</strong> <span th:text="${book.author}"></span></p>
+            <p><strong>Gatunek:</strong> <span th:text="${book.genre}"></span></p>
+        </div>
+
+        <form action="#" th:action="@{/loanBook/{id}(id=${book.id})}" method="post" class="loan-form">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Wypożycz</button>
+        </form>
+
+        <div class="link-container">
+            <a href="/books" class="back-link">Powrót do listy książek</a>
+            <a href="/users" class="back-link">Zobacz wszystkich użytkowników</a>
+        </div>
+    </div>
+</body>
+</html>
